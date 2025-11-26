@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Ocultar controles do Google Drive nos iframes */
+iframe {
+    pointer-events: auto;
+}
+
+/* Tentar ocultar a barra de ferramentas do Google Drive */
+iframe[src*="drive.google.com"] {
+    position: relative;
+}
+
+/* Overlay para cobrir o botão de abrir no Drive (canto superior direito) */
+.iframe-container {
+    position: relative;
+}
+
+.iframe-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    pointer-events: none;
+    z-index: 10;
+}

@@ -58,7 +58,7 @@ export function BonusModule({ onBack }: BonusModuleProps) {
                         <div className="w-24"></div>
                     </div>
                 </div>
-                <div className="flex-1 relative">
+                <div className="flex-1 relative iframe-container">
                     <iframe
                         src={selectedPDF.pdfUrl}
                         className="absolute inset-0 w-full h-full"

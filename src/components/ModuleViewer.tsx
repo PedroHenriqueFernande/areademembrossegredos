@@ -139,7 +139,7 @@ export function ModuleViewer({ moduleId, moduleTitle, onBack }: ModuleViewerProp
                                         </div>
                                     </div>
 
-                                    <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                                    <div className="relative w-full iframe-container" style={{ paddingBottom: '56.25%' }}>
                                         <iframe
                                             src={lesson.videoUrl}
                                             className="absolute top-0 left-0 w-full h-full"
