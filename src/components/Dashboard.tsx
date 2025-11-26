@@ -137,10 +137,10 @@ export function Dashboard({ onLogout }: DashboardProps) {
         <main className="max-w-7xl mx-auto px-8 py-12">
           <div className="mb-12">
             <h2 className="text-4xl font-bold text-white mb-3">
-              Bem-vindo de volta
+              Bem-vindo
             </h2>
             <p className="text-gray-400 text-lg">
-              Continue sua jornada de transformação
+              Desenvolva Sua Jornada Sexual
             </p>
           </div>
 
