@@ -3,12 +3,40 @@ import {
   BookOpen, Target, Zap, Gift, LogOut
 } from 'lucide-react';
 import { ModuleViewer } from './ModuleViewer';
-import { BonusModule } from './BonusModule';
+import { IndividualBonusModule } from './IndividualBonusModule';
 
 const modules = [
   { id: 1, title: 'O Segredo Dos Pornstars - Módulo 1', icon: BookOpen },
   { id: 2, title: 'O Segredo Dos Pornstars - Módulo 2', icon: Target },
   { id: 3, title: 'O Segredo Dos Pornstars - Módulo 3', icon: Zap },
+];
+
+const bonusModules = [
+  {
+    id: 1,
+    title: 'Guia Mental do Domínio, Foco e Autoridade Masculina',
+    pdfUrl: 'https://drive.google.com/file/d/1cnrHI2sOm2umJnWGMOKFTmGCSXZNz1xC/preview'
+  },
+  {
+    id: 2,
+    title: 'Dominancia Silenciosa',
+    pdfUrl: 'https://drive.google.com/file/d/1NzyaWr8wX4UrJ0fwB4hccRUpeL-PfG3m/preview'
+  },
+  {
+    id: 3,
+    title: 'Comunicação de Alto Impacto',
+    pdfUrl: 'https://drive.google.com/file/d/1wx_gV92H4eB15vPuQ7NqBpuoIYBRM_ES/preview'
+  },
+  {
+    id: 4,
+    title: 'Código da Confiança Masculina',
+    pdfUrl: 'https://drive.google.com/file/d/15rMDGLTB9VrIYz4zJtTLR1SLqPbKJ3yn/preview'
+  },
+  {
+    id: 5,
+    title: 'Arquétipo do Macho Alfa',
+    pdfUrl: 'https://drive.google.com/file/d/11L6C2gLXpKo38XP_LcJRaGdmThBXMJlN/preview'
+  }
 ];
 
 interface ModuleCardProps {
@@ -49,14 +77,15 @@ function ModuleCard({ module, onClick }: ModuleCardProps) {
 }
 
 interface BonusCardProps {
+  bonus: typeof bonusModules[0];
   onClick: () => void;
 }
 
-function BonusCard({ onClick }: BonusCardProps) {
+function BonusCard({ bonus, onClick }: BonusCardProps) {
   return (
     <div
       onClick={onClick}
-      className="group relative bg-gradient-to-br from-[#8C1D39] to-[#6B1529] border-2 border-[#D4AF37] rounded-xl p-8 cursor-pointer overflow-hidden"
+      className="group relative bg-gradient-to-br from-[#8C1D39] to-[#6B1529] border-2 border-[#D4AF37] rounded-xl p-6 cursor-pointer overflow-hidden hover:scale-105 transition-all duration-300"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/0 to-[#D4AF37]/20 group-hover:from-[#D4AF37]/10 group-hover:to-[#D4AF37]/30 transition-all duration-300"></div>
 
@@ -67,10 +96,10 @@ function BonusCard({ onClick }: BonusCardProps) {
           <div className="w-12 h-12 bg-black/40 border border-[#D4AF37]/30 rounded-lg flex items-center justify-center group-hover:border-[#D4AF37] transition-all duration-300">
             <Gift className="w-6 h-6 text-[#D4AF37]" />
           </div>
-          <span className="text-[#D4AF37] text-xs font-bold tracking-widest">BÔNUS</span>
+          <span className="text-[#D4AF37] text-xs font-bold tracking-widest">BÔNUS #{bonus.id}</span>
         </div>
         <h3 className="text-white font-bold text-lg leading-tight group-hover:text-[#D4AF37] transition-colors duration-300">
-          O Segredo Dos Pornstars - Bônus
+          {bonus.title}
         </h3>
       </div>
 
@@ -87,10 +116,19 @@ interface DashboardProps {
 
 export function Dashboard({ onLogout }: DashboardProps) {
   const [selectedModule, setSelectedModule] = useState<number | null>(null);
-  const [showBonus, setShowBonus] = useState(false);
+  const [selectedBonus, setSelectedBonus] = useState<number | null>(null);
 
-  if (showBonus) {
-    return <BonusModule onBack={() => setShowBonus(false)} />;
+  if (selectedBonus !== null) {
+    const bonus = bonusModules.find(b => b.id === selectedBonus);
+    if (bonus) {
+      return (
+        <IndividualBonusModule
+          title={bonus.title}
+          pdfUrl={bonus.pdfUrl}
+          onBack={() => setSelectedBonus(null)}
+        />
+      );
+    }
   }
 
   if (selectedModule !== null) {
@@ -152,12 +190,13 @@ export function Dashboard({ onLogout }: DashboardProps) {
                 onClick={() => setSelectedModule(module.id)}
               />
             ))}
-          </div>
-
-          <div className="flex justify-center mt-6">
-            <div className="w-full md:w-1/3">
-              <BonusCard onClick={() => setShowBonus(true)} />
-            </div>
+            {bonusModules.map((bonus) => (
+              <BonusCard
+                key={bonus.id}
+                bonus={bonus}
+                onClick={() => setSelectedBonus(bonus.id)}
+              />
+            ))}
           </div>
         </main>
       </div>
